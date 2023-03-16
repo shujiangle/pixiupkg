@@ -147,8 +147,7 @@ EOF
          yum localinstall -y jq/*
          cp /etc/docker/daemon.json /etc/docker/daemon.json.bak.$(date +%F_%H:%M)
          echo "正在添加registry-mirrors"
-         jq --arg repositoryip "$variable" '.["insecure-registries"] += [$regis_repos_infor:58001]' /etc/do
-cker/daemon.json > /etc/docker/daemon.json.new
+         jq --arg repositoryip "$variable" '.["insecure-registries"] += [$regis_repos_infor:58001]' /etc/docker/daemon.json > /etc/docker/daemon.json.new
          mv /etc/docker/daemon.json.new /etc/docker/daemon.json
          systemctl daemon-reload
          systemctl restart docker
