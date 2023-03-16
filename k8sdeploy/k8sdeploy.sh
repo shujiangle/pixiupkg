@@ -33,6 +33,9 @@ function getk8senv() {
 }
 
 
+getk8senv
+
+
 
 #
 function stopfire() {
@@ -73,7 +76,7 @@ function nexus_install() {
         cp -f nexus.tar.gz /data
      fi
 
-     if [ ! -d "./nexus" ]; then
+     if [ ! -d "/data/nexus" ]; then
         tar -zxvf  ./nexus.tar.gz -C /data
      fi
 
