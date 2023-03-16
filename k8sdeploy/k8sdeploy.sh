@@ -72,7 +72,7 @@ EOF
 # 安全,启动nexus
 function nexus_install() {
      cd $pwddir
-     if [ ! -e "./nexus.tar.gz" ]; then
+     if [ ! -e "/data/nexus.tar.gz" ]; then
         cp -f nexus.tar.gz /data
      fi
 
@@ -110,6 +110,7 @@ function docker_install() {
      tar -zxvf dockerinstall.tar.gz
   fi
   cd dockerinstall && sh docker.sh
+
 
 }
 
