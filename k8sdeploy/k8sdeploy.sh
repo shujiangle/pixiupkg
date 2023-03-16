@@ -72,7 +72,9 @@ EOF
 # 安全,启动nexus
 function nexus_install() {
      cd $pwddir
+
      if [ ! -e "/data/nexus.tar.gz" ]; then
+        mkdir /data
         cp -f nexus.tar.gz /data
      fi
 
