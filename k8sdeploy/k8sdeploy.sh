@@ -147,10 +147,20 @@ EOF
          yum localinstall -y jq/*
          cp /etc/docker/daemon.json /etc/docker/daemon.json.bak.$(date +%F_%H:%M)
          echo "正在添加registry-mirrors"
-         jq --arg repositoryip "$regis_repos_infor" '.["insecure-registries"] += [$repositoryip:58001]' /etc/docker/daemon.json > /etc/docker/daemon.json.new
-         mv /etc/docker/daemon.json.new /etc/docker/daemon.json
-         systemctl daemon-reload
-         systemctl restart docker
+
+
+         if jq --arg repositoryip "$regis_repos_infor" '.["insecure-registries"] += [$repositoryip + ":58001"]' /etc/docker/daemon.json >/dev/null 2>&1; then 
+             jq --arg repositoryip "$regis_repos_infor" '.["insecure-registries"] += [$repositoryip +
+":58001"]' /etc/docker/daemon.json > /etc/docker/daemon.json.new
+           mv /etc/docker/daemon.json.new /etc/docker/daemon.json
+           systemctl daemon-reload
+           systemctl restart docker
+         else
+            echo "jq 脚本执行异常,请检查相关配置"
+            jq --arg repositoryip "$regis_repos_infor" '.["insecure-registries"] += [$repositoryip + ":58001"]' /etc/docker/daemon.json
+            exit 1
+         fi
+
    fi
 
    #variable要传入的regis_repos_infor信息
