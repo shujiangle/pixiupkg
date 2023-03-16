@@ -139,7 +139,8 @@ function  k8soffimage_push() {
    "insecure-registries": ["$regis_repos_infor:58001"]
    }
 EOF
-
+systemctl daemon-reload
+systemctl restart docker
 fi
 
   # 判断insecure-registrie是否添加信任
