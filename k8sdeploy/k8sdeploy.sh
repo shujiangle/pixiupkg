@@ -134,9 +134,9 @@ function  k8soffimage_push() {
 
    # 判断/etc/docker/daemon.json是否存在
    if [ ! -e "/etc/docker/daemon.json" ]; then
-  cat > /etc/docker/daemon.json <<\EOF
+  cat > /etc/docker/daemon.json <<EOF
 {
-  "insecure-registries": ["registry.pixiu.com:58001"]
+  "insecure-registries": ["$regis_repos_infor:58001"]
 }
 EOF
     fi
