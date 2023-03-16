@@ -61,7 +61,7 @@ regis_repos_infor=`cat k8senv.yaml |grep "^regis_repos"|cut -d "=" -f2|sed 's/"/
 
 # 添加hosts的方法
 function add_hosts() {
-  cat >>/etc/hosts << EOF
+    cat>>/etc/hosts<<EOF
 $variable $mirrors_repo_infor
 $variable $regis_repos_infor
 EOF
@@ -134,15 +134,16 @@ function  k8soffimage_push() {
 
    # 判断/etc/docker/daemon.json是否存在
    if [ ! -e "/etc/docker/daemon.json" ]; then
-  cat > /etc/docker/daemon.json <<EOF
-{
-  "insecure-registries": ["$regis_repos_infor:58001"]
-}
+   cat > /etc/docker/daemon.json <<EOF
+   {
+   "insecure-registries": ["$regis_repos_infor:58001"]
+   }
 EOF
-    fi
+
+fi
 
   # 判断insecure-registrie是否添加信任
-  docker_lines=$(grep "registry.pixiu.com" /etc/docker/daemon.json|wc -l)
+  docker_lines=$(grep "$regis_repos_infor" /etc/docker/daemon.json|wc -l)
    if [ ! $docker_lines -gt 0  ]; then
          yum localinstall -y jq/*
          cp /etc/docker/daemon.json /etc/docker/daemon.json.bak.$(date +%F_%H:%M)
@@ -164,7 +165,7 @@ EOF
    fi
 
    #variable要传入的regis_repos_infor信息
-   sh k8simage.sh push $regis_repos_infor
+   cd $pwddir/k8soffimage && sh k8simage.sh push $regis_repos_infor
 }
 
 
